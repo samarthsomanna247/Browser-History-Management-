@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+#define SIZE 100
+
+char stack[MAX][SIZE];
+int top = -1;
+
+void visitPage(char url[]) {
+    if (top == MAX - 1) {
+        printf("History is full!\n");
+        return;
+    }
+
+    strcpy(stack[++top], url);
+    printf("Visited: %s\n", url);
+}
+
+void goBack() {
+    if (top <= 0) {
+        printf("No previous page available!\n");
+    } else {
+        top--;
+        printf("Current page: %s\n", stack[top]);
+    }
+}
+
+void showCurrentPage() {
+    if (top == -1) {
+        printf("No page visited yet!\n");
+    } else {
+        printf("Current page: %s\n", stack[top]);
+    }
+}
+
+int main() {
+    int choice;
+    char url[SIZE];
+
+    while (1) {
+        printf("\n--- Browser History Management ---\n");
+        printf("1. Visit a new page\n");
+        printf("2. Go back\n");
+        printf("3. Show current page\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter website URL: ");
+                scanf("%99s", url);
+                visitPage(url);
+                break;
+
+            case 2:
+                goBack();
+                break;
+
+            case 3:
+                showCurrentPage();
+                break;
+
+            case 4:
+                return 0;
+
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+
+    return 0;
+}
